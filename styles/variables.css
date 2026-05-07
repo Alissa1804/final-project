@@ -1,0 +1,71 @@
+:root {
+    /* ===== Colors ===== */
+
+    /* Brand */
+    --color-brand-primary: #052838;
+    --color-brand-hover: #0C3D54;
+    --color-brand-pressed: #041A24;
+
+    /* Secondary */
+    --color-secondary: #375360;
+
+    /* Accent */
+    --color-accent: #3F73FF;
+
+    /* Error */
+    --color-error: #F55D6D;
+
+    /* Grayscale */
+    --color-gray-400: #999EAD;
+    --color-gray-300: #D7DAE2;
+    --color-gray-200: #F2F4F8;
+    --color-gray-100: #F7F8FA;
+    --color-gray-000: #ffffff;
+
+    /* ===== Typography ===== */
+
+    /* Font */
+    --font-main: "Outfit", sans-serif;
+
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* H1 */
+    --h1-size: 100px;
+    --h1-line: 110px;
+
+    /* H1 mobile */
+    --h1-mob-size: 52px;
+    --h1-mob-line: 60px;
+
+    /* H2 */
+    --h2-size: 64px;
+    --h2-line: 64px;
+
+    /* H3 */
+    --h3-size: 32px;
+    --h3-line: 40px;
+
+    /* H4 */
+    --h4-size: 24px;
+    --h4-line: 32px;
+
+    /* Subtitle */
+    --subt-size: 16px;
+    --subt-line: 24px;
+
+    /* Body */
+    --body-xl-size: 20px;
+    --body-xl-line: 32px;
+
+    --body-l-size: 16px;
+    --body-l-line: 24px;
+
+    --body-m-size: 14px;
+    --body-m-line: 20px;
+
+    --body-s-size: 12px;
+    --body-s-line: 16px;
+}
