@@ -1054,9 +1054,12 @@
          aspect-ratio: 305 / 220;
      }
 
-     .project-card:nth-child(n + 4) {
+     .project-card:nth-child(4) {
          display: flex;
-         flex-direction: column;
+     }
+
+     .project-card:nth-child(n + 5) {
+         display: none;
      }
 
      .portfolio__arrow,
@@ -1080,6 +1083,10 @@
          flex: unset;
      }
 
+     .certificate-card:nth-child(n + 5) {
+         display: none;
+     }
+
      .partners__slider {
          display: flex;
          flex-direction: column;
@@ -1089,10 +1096,10 @@
          scroll-snap-type: none;
      }
 
-     .partner-card {
-
-         max-width: 100%;
+     .partner-card:nth-child(n + 3) {
+         display: none;
      }
+
 
      .partner-card__image {
          width: 100%;
@@ -1348,12 +1355,13 @@
          right: -32px;
      }
 
-     .portfolio__number {
-         color: var(--color-gray-300);
+     .portfolio__number--current {
+         color: var(--color-brand-primary);
      }
 
-     .portfolio__number.is-active {
-         color: var(--color-brand-primary);
+     .portfolio__separator,
+     .portfolio__number--total {
+         color: var(--color-gray-300);
      }
 
      .portfolio__pagination {
@@ -1387,9 +1395,7 @@
          transition: transform 0.3s ease;
      }
 
-     .portfolio__progress.is-second {
-         transform: translateX(100%);
-     }
+
 
      .portfolio__button--mobile {
          display: none;
@@ -1405,6 +1411,10 @@
      .project-card:nth-child(n + 4) {
          display: flex;
          flex-direction: column;
+     }
+
+     .certificate-card:nth-child(n + 5) {
+         display: flex;
      }
 
      .certificates {
@@ -1587,9 +1597,6 @@
          transition: transform 0.3s ease;
      }
 
-     .partners__progress.is-second {
-         transform: translateX(100%);
-     }
 
      .partners__button--desktop {
          display: inline-flex;
@@ -1715,7 +1722,7 @@
      .footer__nav-list {
          display: grid;
          grid-template-columns: repeat(3, max-content);
-         column-gap: 56px;
+         column-gap: 86px;
          row-gap: 32px;
      }
 

@@ -22,129 +22,6 @@ if (menuButton && mobileMenu) {
     });
 }
 
-
-/* ===== Portfolio slider ===== */
-
-const portfolioSlider = document.querySelector('.portfolio__slider');
-const portfolioPrev = document.querySelector('.portfolio__arrow--prev');
-const portfolioNext = document.querySelector('.portfolio__arrow--next');
-const portfolioProgress = document.querySelector('.portfolio__progress');
-
-const portfolioNumberFirst = document.querySelector('.portfolio__number--first');
-const portfolioNumberSecond = document.querySelector('.portfolio__number--second');
-
-if (portfolioSlider && portfolioPrev && portfolioNext) {
-
-    let portfolioPage = 0;
-    const portfolioTotalPages = 2;
-
-    function updatePortfolioSlider() {
-        const card = portfolioSlider.querySelector('.project-card');
-        if (!card) return;
-
-        const gap = parseInt(getComputedStyle(portfolioSlider).gap) || 0;
-        const cardWidth = card.offsetWidth + gap;
-
-        portfolioSlider.scrollTo({
-            left: portfolioPage * cardWidth * 3,
-            behavior: 'smooth',
-        });
-
-        if (portfolioNumberFirst && portfolioNumberSecond) {
-            portfolioNumberFirst.classList.toggle('is-active', portfolioPage === 0);
-            portfolioNumberSecond.classList.toggle('is-active', portfolioPage === 1);
-        }
-
-        if (portfolioProgress) {
-            portfolioProgress.classList.toggle('is-second', portfolioPage === 1);
-        }
-
-        portfolioPrev.classList.toggle('is-disabled', portfolioPage === 0);
-        portfolioNext.classList.toggle('is-disabled', portfolioPage === portfolioTotalPages - 1);
-    }
-
-    portfolioNext.addEventListener('click', () => {
-        if (portfolioPage < portfolioTotalPages - 1) {
-            portfolioPage++;
-            updatePortfolioSlider();
-        }
-    });
-
-    portfolioPrev.addEventListener('click', () => {
-        if (portfolioPage > 0) {
-            portfolioPage--;
-            updatePortfolioSlider();
-        }
-    });
-
-    window.addEventListener('resize', updatePortfolioSlider);
-
-    updatePortfolioSlider();
-}
-
-/* ===== Partners slider ===== */
-
-const partnersSlider = document.querySelector('.partners__slider');
-const partnersPrev = document.querySelector('.partners__arrow--prev');
-const partnersNext = document.querySelector('.partners__arrow--next');
-
-const partnersCurrent = document.querySelector('.partners__number--current');
-const partnersTotal = document.querySelector('.partners__number--total');
-const partnersProgress = document.querySelector('.partners__progress');
-
-if (partnersSlider && partnersPrev && partnersNext) {
-
-    const slides = partnersSlider.querySelectorAll('.partner-card');
-    const total = slides.length;
-
-    let current = 0;
-
-    if (partnersTotal) {
-        partnersTotal.textContent = String(total).padStart(2, '0');
-    }
-
-    function updatePartnersSlider() {
-        const sliderWidth = partnersSlider.offsetWidth;
-
-        partnersSlider.scrollTo({
-            left: current * sliderWidth,
-            behavior: 'smooth'
-        });
-
-        if (partnersCurrent) {
-            partnersCurrent.textContent = String(current + 1).padStart(2, '0');
-        }
-
-        if (partnersProgress) {
-            const step = 100 / total;
-            partnersProgress.style.width = `${step}%`;
-            partnersProgress.style.transform = `translateX(${current * 100}%)`;
-        }
-
-        partnersPrev.classList.toggle('is-disabled', current === 0);
-        partnersNext.classList.toggle('is-disabled', current === total - 1);
-    }
-
-    partnersNext.addEventListener('click', () => {
-        if (current < total - 1) {
-            current++;
-            updatePartnersSlider();
-        }
-    });
-
-    partnersPrev.addEventListener('click', () => {
-        if (current > 0) {
-            current--;
-            updatePartnersSlider();
-        }
-    });
-
-    window.addEventListener('resize', updatePartnersSlider);
-
-    updatePartnersSlider();
-
-}
-
 /* ===== FAQ ===== */
 
 const faqItems = document.querySelectorAll('.faq__item');
@@ -216,6 +93,7 @@ if (window.matchMedia('(min-width: 1024px)').matches) {
     });
 }
 
+
 /* ===== Scroll Top ===== */
 
 const scrollTopBtn = document.querySelector('.scroll-top');
@@ -233,4 +111,113 @@ scrollTopBtn.addEventListener('click', () => {
         top: 0,
         behavior: 'smooth'
     });
+});
+
+/* ===== Universal slider ===== */
+
+function initSlider({
+    sliderSelector,
+    prevSelector,
+    nextSelector,
+    slideSelector,
+    currentSelector,
+    totalSelector,
+    progressSelector,
+    itemsPerPage = 1,
+}) {
+    const slider = document.querySelector(sliderSelector);
+    const prevButton = document.querySelector(prevSelector);
+    const nextButton = document.querySelector(nextSelector);
+
+    if (!slider || !prevButton || !nextButton) {
+        return;
+    }
+
+    const slides = slider.querySelectorAll(slideSelector);
+    const currentNumber = document.querySelector(currentSelector);
+    const totalNumber = document.querySelector(totalSelector);
+    const progress = document.querySelector(progressSelector);
+
+    const totalPages = Math.ceil(slides.length / itemsPerPage);
+    let currentPage = 0;
+
+    if (totalNumber) {
+        totalNumber.textContent = String(totalPages).padStart(2, '0');
+    }
+
+    function updateSlider() {
+        const slide = slides[0];
+
+        if (!slide) {
+            return;
+        }
+
+        const gap = parseInt(getComputedStyle(slider).gap) || 0;
+        const slideWidth = slide.offsetWidth + gap;
+
+        slider.scrollTo({
+            left: currentPage * slideWidth * itemsPerPage,
+            behavior: 'smooth',
+        });
+
+        if (currentNumber) {
+            currentNumber.textContent = String(currentPage + 1).padStart(2, '0');
+        }
+
+        if (progress) {
+            const progressWidth = 100 / totalPages;
+
+            progress.style.width = `${progressWidth}%`;
+            progress.style.transform = `translateX(${currentPage * 100}%)`;
+        }
+
+        prevButton.classList.toggle('is-disabled', currentPage === 0);
+        nextButton.classList.toggle('is-disabled', currentPage === totalPages - 1);
+    }
+
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            updateSlider();
+        }
+    });
+
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            updateSlider();
+        }
+    });
+
+    window.addEventListener('resize', updateSlider);
+
+    updateSlider();
+}
+
+
+/* ===== Portfolio slider ===== */
+
+initSlider({
+    sliderSelector: '.portfolio__slider',
+    prevSelector: '.portfolio__arrow--prev',
+    nextSelector: '.portfolio__arrow--next',
+    slideSelector: '.project-card',
+    currentSelector: '.portfolio__number--current',
+    totalSelector: '.portfolio__number--total',
+    progressSelector: '.portfolio__progress',
+    itemsPerPage: 3,
+});
+
+
+/* ===== Partners slider ===== */
+
+initSlider({
+    sliderSelector: '.partners__slider',
+    prevSelector: '.partners__arrow--prev',
+    nextSelector: '.partners__arrow--next',
+    slideSelector: '.partner-card',
+    currentSelector: '.partners__number--current',
+    totalSelector: '.partners__number--total',
+    progressSelector: '.partners__progress',
+    itemsPerPage: 1,
 });
