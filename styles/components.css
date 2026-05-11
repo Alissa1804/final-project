@@ -1522,10 +1522,15 @@
          gap: 0;
      }
 
+     .partner-card:nth-child(n + 3) {
+         display: block;
+     }
+
      .partner-card {
          flex: 0 0 100%;
          max-width: 100%;
      }
+
 
      .partner-card__text {
          max-width: 800px
